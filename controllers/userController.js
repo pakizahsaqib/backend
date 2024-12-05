@@ -7,6 +7,8 @@ const {
   createUser,
   getAllUser,
   getUser,
+  updateUser,
+  deleteUser,
 } = require("../database/models/userModel");
 const responseHandler = require("../responseHandler");
 
@@ -35,21 +37,22 @@ const getOne = async (req, res, next) => {
     return responseHandler(res, { error });
   }
 };
-const update = (req, res) => {
-  return res.send({
-    status: 200,
-    message: "User updated successfully",
-    data: req.body,
-    error: {},
-  });
+const update = async (req, res) => {
+  try {
+    const user = await updateUser(req.body);
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error });
+  }
 };
 
-const remove = (req, res, next) => {
-  //res.json({"delete":"Data Deleted"})
-  const { username } = req.query;
-  const resultant_array = user.filter((item) => item.username !== username);
-  console.log(resultant_array);
-  return res.send(resultant_array);
+const remove = async (req, res, next) => {
+  try {
+    const user = await deleteUser(req.query);
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error });
+  }
 };
 
 module.exports = { create, getAll, getOne, update, remove };

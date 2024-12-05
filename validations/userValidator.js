@@ -56,6 +56,7 @@ const getUser = async (req, res, next) => {
 
 // Update
 const updateValidation = joi.object({
+  userId: joi.string().max(64).required(),
   name: joi.string().min(3).max(34).required(),
   username: joi.string().alphanum().min(6).max(34).required(), //use read-only flag
   email: joi.string().email().required(),
@@ -82,7 +83,7 @@ const updateUser = async (req, res, next) => {
 
 // remove
 const removeValidation = joi.object({
-  username: joi.string().alphanum().min(6).max(34).required(), // purpose of validation is to make sure user has entered the username
+  userId: joi.string().max(64).required(), // purpose of validation is to make sure user has entered the username/userId
 });
 
 const removeUser = async (req, res, next) => {

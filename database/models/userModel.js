@@ -48,4 +48,29 @@ module.exports = {
       return { error };
     }
   },
+  //{ userId, ...body } here we are destructuring, separating userId to apply where condition ,
+  //and then applying rest operator with body to pass the rest of data for iupdation
+  updateUser: async ({ userId, ...body }) => {
+    try {
+      const data = await models.users.update(
+        { ...body },
+        { where: { userId: userId } }
+      );
+      return {
+        data: data,
+      };
+    } catch (error) {
+      return { error };
+    }
+  },
+  deleteUser: async ({ userId }) => {
+    try {
+      const data = await models.users.destroy({ where: { userId: userId } });
+      return {
+        data: data,
+      };
+    } catch (error) {
+      return { error };
+    }
+  },
 };
