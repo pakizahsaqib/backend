@@ -1,4 +1,5 @@
 const { models } = require("../index");
+const { Op } = require("sequelize");
 module.exports = {
   //input will be recieved from front end, so data will  come from body
 
@@ -21,13 +22,31 @@ module.exports = {
     }
   },
 
-  getAllUser: async () => {
+  getAllUser: async (offset, query) => {
     try {
       const data = await models.users.findAndCountAll({
+        //where:{} AND operator
+        //where:[] OR operator
+        where: {
+          [Op.or]: [
+            { ...(query.name ? { name: query.name } : true) },
+            { ...(query.username ? { username: query.username } : true) },
+            { ...(query.email ? { email: query.email } : true) },
+          ],
+        },
         attributes: {
           exclude: ["password", "deletedAt"],
         },
-        paranoid: false,
+
+        offset: offset,
+        limit: query.limit,
+        order: [
+          [
+            query.orderBy ? query.orderBy : "createdAt", // On which column we want to apply sorting
+            query.order ? query.order : "DESC", //  What kind of sorting ascending or descending we want to apply
+          ],
+        ],
+        //paranoid: false,
       });
       return { data };
     } catch (error) {

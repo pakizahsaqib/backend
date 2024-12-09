@@ -23,7 +23,10 @@ const create = async (req, res) => {
 
 const getAll = async (req, res, next) => {
   try {
-    const user = await getAllUser(req.query);
+    const { pageNo, limit } = req.query;
+    const offset = (pageNo - 1) * limit;
+    const user = await getAllUser(offset, req.query);
+
     return responseHandler(res, user);
   } catch (error) {
     return responseHandler(res, { error });

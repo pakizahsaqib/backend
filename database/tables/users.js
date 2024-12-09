@@ -30,7 +30,7 @@ users.init(
     },
     email: {
       // username can not be primary key as it may contain spaces, or it can be of any length, its better to avoid
-      type: DataTypes.STRING(16),
+      type: DataTypes.STRING(),
       allowNull: false,
       unique: true,
     },

@@ -10,6 +10,7 @@ const {
 const {
   createUser,
   getUser,
+  getAllUsers,
   updateUser,
   removeUser,
 } = require("../validations/userValidator.js");
@@ -19,7 +20,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.post("/create", createUser, create); //createUser act as a middleware it perform validation and then, create req/function is carried out
-router.get("/get-all", getAll);
+router.get("/get-all", getAllUsers, getAll);
 router.get("/get", getUser, getOne);
 router.put("/update", updateUser, update);
 router.delete("/remove", removeUser, remove); //delete keyword cannot be used - reserved keyword

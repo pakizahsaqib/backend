@@ -1,5 +1,6 @@
 module.exports = (res, result) => {
   try {
+    console.log("======>: ", res, result);
     if (result.error) {
       throw result.error;
     }
@@ -10,12 +11,10 @@ module.exports = (res, result) => {
       error: {},
     });
   } catch (error) {
-    return res.send(
-      res.send({
-        status: 400,
-        data: {},
-        error: error,
-      })
-    );
+    return res.send({
+      status: 400,
+      data: {},
+      error: error,
+    });
   }
 };
